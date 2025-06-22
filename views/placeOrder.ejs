@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Summary | Restaurant</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      padding: 40px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .order-info {
+      margin-bottom: 20px;
+    }
+
+    .order-info ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .order-info li {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .order-info li:last-child {
+      border-bottom: none;
+    }
+
+    .total {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e86de;
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .payment-btn {
+      margin-top: 30px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .payment-btn:hover {
+      background-color: #219150;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Order Placed Successfully!</h1>
+
+    <div class="order-info">
+      <p><strong>Order Summary:</strong></p>
+      <ul>
+        <% if (order && order.items) { %>
+          <% order.items.forEach(item => { %>
+            <li><%= item.name %> - ₹<%= item.price %></li>
+          <% }) %>
+        <% } %>
+      </ul>
+
+      <div class="total">
+        Total Amount: ₹<%= order.total %>
+      </div>
+    </div>
+
+    <!--  You can later connect this button to your Razorpay/Stripe integration -->
+    <form action="/payment" method="POST">
+      <input type="hidden" name="orderId" value="<%= order._id %>">
+      <button type="submit" class="payment-btn">Proceed to Payment</button>
+    </form>
+
+    <div class="back-link">
+      <a href="/menu">← Back to Menu</a>
+    </div>
+  </div>
+</body>
+</html>
