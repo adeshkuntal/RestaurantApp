@@ -79,6 +79,54 @@
       color: #007bff;
       text-decoration: none;
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      margin: 10% auto;
+      display: block;
+      width: 320px;
+      max-width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background-color: white;
+      padding: 15px 20px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-content img {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .modal-content .qr-text {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .close {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      font-size: 24px;
+      color: #333;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -100,15 +148,37 @@
       </div>
     </div>
 
-    <!--  You can later connect this button to your Razorpay/Stripe integration -->
-    <form action="/payment" method="POST">
-      <input type="hidden" name="orderId" value="<%= order._id %>">
-      <button type="submit" class="payment-btn">Proceed to Payment</button>
-    </form>
+    <button type="button" class="payment-btn" onclick="openModal()">Proceed to Payment</button>
+
+    <!-- Modal -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="qr-text">Scan the QR code for payment</div>
+        <img src="/images/phonepay.jpg" alt="Payment QR">
+      </div>
+    </div>
 
     <div class="back-link">
       <a href="/menu">← Back to Menu</a>
     </div>
   </div>
+
+  <script>
+    function openModal() {
+      document.getElementById("paymentModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("paymentModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
 </body>
 </html>
