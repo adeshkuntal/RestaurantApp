@@ -17,6 +17,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.get('/admin', protect, adminOnly, adminPage);
 router.get('/menu', protect, menuPage);   
-router.post('/admin/add-dish',protect,add_Dish);        
+router.post('/admin/add-dish',protect,add_Dish);  
+
 
 module.exports = router;
